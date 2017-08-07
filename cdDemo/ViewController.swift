@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         
         let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
         
-        newUser.setValue("west", forKey: "username")
+        newUser.setValue("wen", forKey: "username")
         newUser.setValue("myPass", forKey: "password")
         newUser.setValue(32, forKey: "age")
         
@@ -36,6 +36,31 @@ class ViewController: UIViewController {
             
             print("There was an error")
             
+        }
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
+        
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try context.fetch(request)
+            if results.count > 0 {
+                
+                for result in results as! [NSManagedObject] {
+                    
+                    if let username = result.value(forKey: "username") as? String {
+                        print(username)
+                    }
+                    
+                }
+                
+            }
+            else {
+                print("no results")
+            }
+        }
+        catch {
+            print("Couldn't fetch results")
         }
         
     }
