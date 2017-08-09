@@ -19,28 +19,28 @@ class ViewController: UIViewController {
         
         let context = appDelegate.persistentContainer.viewContext
         
-        let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
-        
-        newUser.setValue("david", forKey: "username")
-        newUser.setValue("myPass", forKey: "password")
-        newUser.setValue(8, forKey: "age")
-        
-        do {
-            
-            try context.save()
-            
-            print("Saved")
-            
-        }
-        catch {
-            
-            print("There was an error")
-            
-        }
+//        let newUser = NSEntityDescription.insertNewObject(forEntityName: "Users", into: context)
+//        
+//        newUser.setValue("david", forKey: "username")
+//        newUser.setValue("myPass", forKey: "password")
+//        newUser.setValue(8, forKey: "age")
+//        
+//        do {
+//            
+//            try context.save()
+//            
+//            print("Saved")
+//            
+//        }
+//        catch {
+//            
+//            print("There was an error")
+//            
+//        }
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Users")
         
-        request.predicate = NSPredicate(format: "age <= %@", "10")
+        request.predicate = NSPredicate(format: "username = %@", "west")
         
         request.returnsObjectsAsFaults = false
         
@@ -51,6 +51,23 @@ class ViewController: UIViewController {
                 for result in results as! [NSManagedObject] {
                     
                     if let username = result.value(forKey: "username") as? String {
+                        
+                        context.delete(result)
+                        
+//                        do {
+//                        try context.save()
+//                        } catch  {
+//                        print("delete failed")
+//                        }
+//                        
+//                        result.setValue("joseph", forKey: "username")
+//                        
+//                        do {
+//                            try context.save()
+//                        } catch  {
+//                            print("rename failed")
+//                        }
+                        
                         print(username)
                     }
                     
